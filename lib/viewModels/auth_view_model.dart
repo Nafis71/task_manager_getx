@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager_getx/models/loginModels/login_model.dart';
@@ -7,10 +5,10 @@ import 'package:task_manager_getx/models/responseModel/success.dart';
 import 'package:task_manager_getx/services/auth_service.dart';
 import 'package:task_manager_getx/utils/app_navigation.dart';
 import 'package:task_manager_getx/viewModels/user_view_model.dart';
-
+import 'package:get/get.dart';
 import '../models/loginModels/user_data.dart';
 
-class AuthViewModel extends ChangeNotifier {
+class AuthViewModel extends GetxController{
   bool _isPasswordObscured = true;
   bool _isLoading = false;
   bool finalStatus = false;
@@ -29,7 +27,7 @@ class AuthViewModel extends ChangeNotifier {
 
   void setLoading(value) {
     _isLoading = value;
-    notifyListeners();
+    update();
   }
 
   Future<bool> registerUser(
@@ -137,6 +135,6 @@ class AuthViewModel extends ChangeNotifier {
 
   set setPasswordObscure(bool value) {
     _isPasswordObscured = value;
-    notifyListeners();
+    update();
   }
 }

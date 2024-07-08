@@ -1,16 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager_getx/models/loginModels/user_data.dart';
 import 'package:task_manager_getx/models/responseModel/success.dart';
 import 'package:task_manager_getx/services/user_info_service.dart';
-
+import 'package:get/get.dart';
 import '../models/loginModels/login_model.dart';
 
-class UserViewModel extends ChangeNotifier {
+class UserViewModel extends GetxController {
   String _token = "";
   bool _isLoading = false;
   bool _isPasswordObscured = true;
@@ -36,19 +34,19 @@ class UserViewModel extends ChangeNotifier {
 
   set setIsPasswordObscured(bool value) {
     _isPasswordObscured = value;
-    notifyListeners();
+    update();
   }
 
   set setToken(String token) => _token = token;
 
   set setIsLoading(bool isLoading) {
     _isLoading = isLoading;
-    notifyListeners();
+    update();
   }
 
   set setUserData(UserData userData) {
     _userData = userData;
-    notifyListeners();
+    update();
   }
 
   Future<void> loadUserData(SharedPreferences preferences) async {
@@ -74,7 +72,7 @@ class UserViewModel extends ChangeNotifier {
     if (pickedFile != null) {
       imageName = pickedFile.name;
       convertImage(pickedFile);
-      notifyListeners();
+      update();
     }
   }
 

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager_getx/utils/app_assets.dart';
 import 'package:task_manager_getx/utils/app_color.dart';
+import 'package:get/get.dart';
 
-class ThemeChanger extends ChangeNotifier {
+class ThemeChanger extends GetxController {
   ThemeMode _themeMode = ThemeMode.system;
   bool _isAppLaunched = false;
 
@@ -16,7 +17,7 @@ class ThemeChanger extends ChangeNotifier {
 
   set setThemeMode(ThemeMode mode) {
     _themeMode = mode;
-    notifyListeners();
+    update();
   }
 
   set setThemeModeSilent(ThemeMode mode) {
@@ -26,8 +27,7 @@ class ThemeChanger extends ChangeNotifier {
   String getBackgroundImage(BuildContext context) {
     if (getThemeMode(context) == ThemeMode.dark) {
       return AppAssets.backgroundImageDark;
-    }
-    return AppAssets.backgroundImageLight;
+    }    return AppAssets.backgroundImageLight;
   }
 
   ThemeMode getThemeMode(BuildContext context) {

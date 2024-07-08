@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
 import 'package:task_manager_getx/utils/app_color.dart';
 import 'package:task_manager_getx/utils/app_strings.dart';
 import 'package:task_manager_getx/viewModels/auth_view_model.dart';
@@ -12,7 +10,7 @@ import 'package:task_manager_getx/views/authScreens/forgetPasswordScreen/pinVeri
 import 'package:task_manager_getx/views/authScreens/forgetPasswordScreen/pinVerificationScreen/resend_pin_layout.dart';
 import 'package:task_manager_getx/views/widgets/app_snackbar.dart';
 import 'package:task_manager_getx/views/widgets/forget_password_layout.dart';
-
+import 'package:get/get.dart';
 import '../../../../utils/app_routes.dart';
 
 class PinVerificationScreen extends StatefulWidget {
@@ -24,7 +22,8 @@ class PinVerificationScreen extends StatefulWidget {
 
 class _PinVerificationScreenState extends State<PinVerificationScreen> {
   late final List<TextEditingController> pinTEControllers;
-
+  late final CountdownTimerViewModel _countdownTimerViewModel;
+  late final AuthViewModel _authViewModel;
   late final List<FocusNode> focusNodes;
   late GlobalKey<FormState> _formKey;
   final double textFieldHeight = 50;
@@ -35,18 +34,20 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
     pinTEControllers = List.generate(6, (index) => TextEditingController());
     focusNodes = List.generate(6, (index) => FocusNode());
     _formKey = GlobalKey<FormState>();
+    _countdownTimerViewModel = Get.put(CountdownTimerViewModel());
+    _authViewModel = Get.put(AuthViewModel());
     super.initState();
     startCountDownTimer();
   }
 
   void startCountDownTimer() async {
-    context.read<CountdownTimerViewModel>().resetCountDown();
+    _countdownTimerViewModel.resetCountDown();
     timer = Timer.periodic(const Duration(seconds: 1), (countdown) {
       if (countdown.tick > 60) {
         countdown.cancel();
         return;
       }
-      context.read<CountdownTimerViewModel>().updateCountdown();
+      _countdownTimerViewModel.updateCountdown();
     });
   }
 
@@ -92,16 +93,17 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                   focusNodes: focusNodes,
                 ),
                 const Gap(5),
-                Consumer<CountdownTimerViewModel>(builder: (_, viewModel, __) {
-                  return Padding(
+                GetBuilder<CountdownTimerViewModel>(
+                  builder: (viewModel) => Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ResendPinLayout(
+                      authViewModel: _authViewModel,
                       resendTimeLeft: viewModel.resendTimeLeft,
-                      email: context.read<AuthViewModel>().recoveryEmail,
+                      email: _authViewModel.recoveryEmail,
                       restartTimer: startCountDownTimer,
                     ),
-                  );
-                })
+                  ),
+                ),
               ],
             ),
           );
@@ -115,7 +117,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
     for (TextEditingController controller in pinTEControllers) {
       otp = otp + controller.text.trim();
     }
-    bool status = await context.read<AuthViewModel>().verifyOTP(otp);
+    bool status = await _authViewModel.verifyOTP(otp);
     if (status && mounted) {
       timer.cancel();
       Navigator.pushReplacementNamed(context, AppRoutes.setPasswordScreen);
@@ -139,6 +141,8 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
     for (FocusNode focusNode in focusNodes) {
       focusNode.dispose();
     }
+    _authViewModel.dispose();
+    _countdownTimerViewModel.dispose();
     super.dispose();
   }
 }

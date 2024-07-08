@@ -1,7 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:task_manager_getx/models/responseModel/failure.dart';
 import 'package:task_manager_getx/utils/app_color.dart';
 import 'package:task_manager_getx/utils/app_strings.dart';
@@ -23,6 +23,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
   late final FocusNode _passwordFocusNode;
   late final FocusNode _confirmPasswordFocusNode;
   late final GlobalKey<FormState> _formKey;
+  late final AuthViewModel _authViewModel;
 
   @override
   void initState() {
@@ -31,6 +32,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     _passwordTEController = TextEditingController();
     _confirmPasswordTEController = TextEditingController();
     _formKey = GlobalKey<FormState>();
+    _authViewModel = Get.put(AuthViewModel());
     super.initState();
   }
 
@@ -114,9 +116,8 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
   }
 
   Future<void> initiatePasswordReset() async {
-    bool status = await context
-        .read<AuthViewModel>()
-        .resetPassword(_passwordTEController.text.trim());
+    bool status =
+        await _authViewModel.resetPassword(_passwordTEController.text.trim());
     if (status && mounted) {
       AppSnackBar().showSnackBar(
           title: AppStrings.resetPasswordSuccessTitle,
@@ -128,7 +129,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
       return;
     }
     if (mounted) {
-      Failure failure = context.read<AuthViewModel>().response as Failure;
+      Failure failure = _authViewModel.response as Failure;
       AppSnackBar().showSnackBar(
           title: AppStrings.resetPasswordFailureTitle,
           content: failure.message,
@@ -144,6 +145,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     _confirmPasswordTEController.dispose();
     _confirmPasswordFocusNode.dispose();
     _passwordFocusNode.dispose();
+    _authViewModel.dispose();
     super.dispose();
   }
 }

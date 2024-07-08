@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
-
+import 'package:get/get.dart';
 import '../../../utils/app_color.dart';
 import '../../../utils/app_strings.dart';
 import '../../../viewModels/auth_view_model.dart';
@@ -44,8 +43,8 @@ class SignInScreenForm extends StatelessWidget {
             errorText: AppStrings.emailErrorText,
           ),
           const Gap(15),
-          Consumer<AuthViewModel>(
-            builder: (_, viewModel, __) => AppTextField(
+          GetBuilder<AuthViewModel>(
+            builder: (viewModel) => AppTextField(
               inputType: TextInputType.visiblePassword,
               focusNode: passwordFocusNode,
               controller: passwordTEController,
@@ -68,25 +67,23 @@ class SignInScreenForm extends StatelessWidget {
           const Gap(20),
           SizedBox(
             width: screenWidth * 0.9,
-            child: Consumer<AuthViewModel>(
-              builder: (_, viewModel, __) {
-                return ElevatedButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate() &&
-                        !viewModel.isLoading) {
-                      initiateSignIn();
-                    }
-                    FocusScope.of(context).unfocus();
-                  },
-                  child: viewModel.isLoading
-                      ? const CircularProgressbar(
-                          color: AppColor.circularProgressbarColor)
-                      : const Icon(
-                          Icons.arrow_circle_right_outlined,
-                          size: 30,
-                        ),
-                );
-              },
+            child: GetBuilder<AuthViewModel>(
+              builder: (viewModel) => ElevatedButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate() &&
+                      !viewModel.isLoading) {
+                    initiateSignIn();
+                  }
+                  FocusScope.of(context).unfocus();
+                },
+                child: viewModel.isLoading
+                    ? const CircularProgressbar(
+                        color: AppColor.circularProgressbarColor)
+                    : const Icon(
+                        Icons.arrow_circle_right_outlined,
+                        size: 30,
+                      ),
+              ),
             ),
           ),
         ],

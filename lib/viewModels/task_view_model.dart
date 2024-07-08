@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:task_manager_getx/models/responseModel/success.dart';
 import 'package:task_manager_getx/models/taskListModel/task_data.dart';
 import 'package:task_manager_getx/models/taskListModel/task_list_model.dart';
@@ -6,10 +5,10 @@ import 'package:task_manager_getx/models/taskStatusCountModels/task_status_count
 import 'package:task_manager_getx/services/task_service.dart';
 import 'package:task_manager_getx/utils/app_strings.dart';
 import 'package:task_manager_getx/viewModels/dashboard_view_model.dart';
-
+import 'package:get/get.dart';
 import '../models/taskStatusCountModels/status_data.dart';
 
-class TaskViewModel extends ChangeNotifier {
+class TaskViewModel extends GetxController {
   List<StatusData> _taskStatusData = [];
   List<String> taskList = [
     AppStrings.taskStatusNew,
@@ -41,7 +40,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void setIsLoading(bool value) {
     _isLoading = value;
-    notifyListeners();
+    update();
   }
 
   void resetTaskData() {
@@ -51,7 +50,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void setIsTileExpanded(String taskStatus, int index, bool value) {
     _taskDataByStatus[taskStatus]![index].isTileExpanded = value;
-    notifyListeners();
+    update();
   }
 
   Future<void> fetchTaskStatusData(String token) async {
@@ -86,7 +85,7 @@ class TaskViewModel extends ChangeNotifier {
         }
       }
     }
-    notifyListeners();
+    update();
   }
 
   Future<bool> createTask(
@@ -174,7 +173,7 @@ class TaskViewModel extends ChangeNotifier {
   Future<bool> deleteTask(
       String token, String taskId, String taskStatus, int index) async {
     selectedIndex[taskStatus] = index;
-    notifyListeners();
+    update();
     response = await taskService.deleteTask(taskId, token);
     if (response is Success) {
       _taskDataByStatus[taskStatus]
@@ -182,16 +181,16 @@ class TaskViewModel extends ChangeNotifier {
       selectedIndex[taskStatus] = -1;
       taskStatusCount[taskStatus] =
           (int.parse(taskStatusCount[taskStatus].toString()) - 1).toString();
-      notifyListeners();
+      update();
       return true;
     } else {
       selectedIndex[taskStatus] = -1;
-      notifyListeners();
+      update();
       return false;
     }
   }
 
   void refreshViewModel() {
-    notifyListeners();
+    update();
   }
 }

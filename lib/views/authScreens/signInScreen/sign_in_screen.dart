@@ -2,7 +2,6 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
 import 'package:task_manager_getx/models/responseModel/failure.dart';
 import 'package:task_manager_getx/utils/app_color.dart';
 import 'package:task_manager_getx/utils/app_navigation.dart';
@@ -13,7 +12,7 @@ import 'package:task_manager_getx/viewModels/task_view_model.dart';
 import 'package:task_manager_getx/viewModels/user_view_model.dart';
 import 'package:task_manager_getx/views/authScreens/signInScreen/sign_in_screen_form.dart';
 import 'package:task_manager_getx/views/widgets/app_snackbar.dart';
-
+import 'package:get/get.dart';
 import '../../widgets/background_widget.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -27,14 +26,20 @@ class _SignInScreenState extends State<SignInScreen> {
   late final TextEditingController _emailTEController;
   late final TextEditingController _passwordTEController;
   late final GlobalKey<FormState> _formKey;
-  late final FocusNode _emailFocusNode = FocusNode();
-  late final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
+  late final AuthViewModel _authViewModel;
+  late final UserViewModel _userViewModel;
+  late final TaskViewModel _taskViewModel;
 
   @override
   void initState() {
     _emailTEController = TextEditingController();
     _passwordTEController = TextEditingController();
     _formKey = GlobalKey<FormState>();
+    _authViewModel = Get.put(AuthViewModel());
+    _userViewModel = Get.put(UserViewModel());
+    _taskViewModel = Get.put(TaskViewModel());
     super.initState();
   }
 
@@ -117,18 +122,18 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Future<void> initiateSignIn() async {
-    bool status = await context.read<AuthViewModel>().signInUser(
+    bool status = await _authViewModel.signInUser(
         email: _emailTEController.text.trim(),
         password: _passwordTEController.text,
-        userViewModel: context.read<UserViewModel>());
+        userViewModel: _userViewModel);
     if (mounted && status) {
-      context.read<TaskViewModel>().resetTaskData();
+      _taskViewModel.resetTaskData();
       Navigator.pushReplacementNamed(context, AppRoutes.dashboardScreen);
-      context.read<AuthViewModel>().setPasswordObscure = true;
+      _authViewModel.setPasswordObscure = true;
       return;
     }
     if (mounted) {
-      Failure failure = context.read<AuthViewModel>().response as Failure;
+      Failure failure = _authViewModel.response as Failure;
       AppSnackBar().showSnackBar(
           title: AppStrings.signInFailureTitle,
           content: failure.message,
@@ -144,6 +149,9 @@ class _SignInScreenState extends State<SignInScreen> {
     _passwordTEController.dispose();
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
+    _authViewModel.dispose();
+    _taskViewModel.dispose();
+    _userViewModel.dispose();
     super.dispose();
   }
 }

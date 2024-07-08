@@ -1,13 +1,13 @@
-import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 
-class CountdownTimerViewModel extends ChangeNotifier {
+class CountdownTimerViewModel extends GetxController {
   int _resendTimeLeft = 60;
 
   int get resendTimeLeft => _resendTimeLeft;
 
   void updateCountdown() {
     _resendTimeLeft--;
-    notifyListeners();
+    update();
   }
 
   void resetCountDown() {
