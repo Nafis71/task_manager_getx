@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager_getx/utils/app_assets.dart';
 import 'package:task_manager_getx/utils/app_color.dart';
-import 'package:get/get.dart';
 
 class ThemeChanger extends GetxController {
   ThemeMode _themeMode = ThemeMode.system;
@@ -27,7 +27,8 @@ class ThemeChanger extends GetxController {
   String getBackgroundImage(BuildContext context) {
     if (getThemeMode(context) == ThemeMode.dark) {
       return AppAssets.backgroundImageDark;
-    }    return AppAssets.backgroundImageLight;
+    }
+    return AppAssets.backgroundImageLight;
   }
 
   ThemeMode getThemeMode(BuildContext context) {

@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager_getx/models/loginModels/user_data.dart';
 import 'package:task_manager_getx/models/responseModel/success.dart';
 import 'package:task_manager_getx/services/user_info_service.dart';
-import 'package:get/get.dart';
+
 import '../models/loginModels/login_model.dart';
 
 class UserViewModel extends GetxController {

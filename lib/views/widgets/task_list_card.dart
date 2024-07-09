@@ -1,13 +1,14 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:task_manager_getx/utils/app_strings.dart';
 import 'package:task_manager_getx/viewModels/dashboard_view_model.dart';
 import 'package:task_manager_getx/viewModels/task_view_model.dart';
 import 'package:task_manager_getx/viewModels/user_view_model.dart';
 import 'package:task_manager_getx/views/widgets/app_snackbar.dart';
-import 'package:get/get.dart';
+
 import '../../models/taskListModel/task_data.dart';
 import '../../utils/app_color.dart';
 

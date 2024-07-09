@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+
 import '../../../utils/app_color.dart';
 import '../../../utils/app_strings.dart';
 import '../../../viewModels/auth_view_model.dart';

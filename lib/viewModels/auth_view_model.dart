@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager_getx/models/loginModels/login_model.dart';
@@ -5,10 +6,10 @@ import 'package:task_manager_getx/models/responseModel/success.dart';
 import 'package:task_manager_getx/services/auth_service.dart';
 import 'package:task_manager_getx/utils/app_navigation.dart';
 import 'package:task_manager_getx/viewModels/user_view_model.dart';
-import 'package:get/get.dart';
+
 import '../models/loginModels/user_data.dart';
 
-class AuthViewModel extends GetxController{
+class AuthViewModel extends GetxController {
   bool _isPasswordObscured = true;
   bool _isLoading = false;
   bool finalStatus = false;

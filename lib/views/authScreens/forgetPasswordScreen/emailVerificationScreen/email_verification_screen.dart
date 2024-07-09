@@ -1,6 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:task_manager_getx/models/responseModel/failure.dart';
 import 'package:task_manager_getx/utils/app_color.dart';
 import 'package:task_manager_getx/utils/app_routes.dart';
@@ -9,7 +10,6 @@ import 'package:task_manager_getx/viewModels/auth_view_model.dart';
 import 'package:task_manager_getx/views/widgets/app_snackbar.dart';
 import 'package:task_manager_getx/views/widgets/app_textfield.dart';
 import 'package:task_manager_getx/views/widgets/forget_password_layout.dart';
-import 'package:get/get.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key});
@@ -80,7 +80,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   }
 
   Future<void> initiateOTPSending() async {
-    bool status = await Get.find<AuthViewModel>().sendOTP(_emailTEController.text.trim());
+    bool status =
+        await Get.find<AuthViewModel>().sendOTP(_emailTEController.text.trim());
     if (status && mounted) {
       Navigator.pushReplacementNamed(context, AppRoutes.pinVerificationScreen);
       return;

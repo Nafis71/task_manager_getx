@@ -6,7 +6,7 @@ import 'package:task_manager_getx/viewModels/dashboard_view_model.dart';
 import 'package:task_manager_getx/viewModels/task_view_model.dart';
 import 'package:task_manager_getx/viewModels/user_view_model.dart';
 
-class AppBinding extends Bindings{
+class AppBinding extends Bindings {
   @override
   void dependencies() {
     Get.put(TaskViewModel());

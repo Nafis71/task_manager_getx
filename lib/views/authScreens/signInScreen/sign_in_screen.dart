@@ -2,6 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:task_manager_getx/models/responseModel/failure.dart';
 import 'package:task_manager_getx/utils/app_color.dart';
 import 'package:task_manager_getx/utils/app_navigation.dart';
@@ -12,7 +13,7 @@ import 'package:task_manager_getx/viewModels/task_view_model.dart';
 import 'package:task_manager_getx/viewModels/user_view_model.dart';
 import 'package:task_manager_getx/views/authScreens/signInScreen/sign_in_screen_form.dart';
 import 'package:task_manager_getx/views/widgets/app_snackbar.dart';
-import 'package:get/get.dart';
+
 import '../../widgets/background_widget.dart';
 
 class SignInScreen extends StatefulWidget {

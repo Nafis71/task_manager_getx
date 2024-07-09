@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_strings.dart';
@@ -8,7 +10,6 @@ import '../../viewModels/user_view_model.dart';
 import '../widgets/fallback_widget.dart';
 import '../widgets/loading_layout.dart';
 import '../widgets/task_list_card.dart';
-import 'package:get/get.dart';
 
 class TaskProgressScreen extends StatefulWidget {
   const TaskProgressScreen({super.key});
@@ -66,7 +67,8 @@ class _TaskProgressScreenState extends State<TaskProgressScreen> {
   }
 
   Future<void> fetchListData() async {
-    await Get.find<TaskViewModel>().fetchTaskList(Get.find<UserViewModel>().token);
+    await Get.find<TaskViewModel>()
+        .fetchTaskList(Get.find<UserViewModel>().token);
   }
 
   @override

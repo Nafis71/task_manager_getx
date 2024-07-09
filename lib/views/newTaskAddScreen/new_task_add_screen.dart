@@ -22,7 +22,6 @@ class NewTaskAddScreen extends StatefulWidget {
 }
 
 class _NewTaskAddScreenState extends State<NewTaskAddScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -159,6 +158,7 @@ class _NewTaskAddScreenState extends State<NewTaskAddScreen> {
           .fetchTaskList(Get.find<UserViewModel>().token);
     }
   }
+
   @override
   void dispose() {
     super.dispose();

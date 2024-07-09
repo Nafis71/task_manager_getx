@@ -8,11 +8,12 @@ class ResendPinLayout extends StatelessWidget {
   final String email;
   final Function restartTimer;
 
-  const ResendPinLayout(
-      {super.key,
-      required this.resendTimeLeft,
-      required this.email,
-      required this.restartTimer,});
+  const ResendPinLayout({
+    super.key,
+    required this.resendTimeLeft,
+    required this.email,
+    required this.restartTimer,
+  });
 
   @override
   Widget build(BuildContext context) {

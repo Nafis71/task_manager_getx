@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager_getx/services/connectivity_checker.dart';
@@ -6,14 +7,13 @@ import 'package:task_manager_getx/themes/theme_changer.dart';
 import 'package:task_manager_getx/utils/app_assets.dart';
 import 'package:task_manager_getx/utils/app_color.dart';
 import 'package:task_manager_getx/utils/app_strings.dart';
-import 'package:task_manager_getx/viewModels/auth_view_model.dart';
 import 'package:task_manager_getx/viewModels/dashboard_view_model.dart';
 import 'package:task_manager_getx/viewModels/task_view_model.dart';
 import 'package:task_manager_getx/views/taskCancelledScreen/task_cancelled_screen.dart';
 import 'package:task_manager_getx/views/taskCompletedScreen/task_completed_screen.dart';
 import 'package:task_manager_getx/views/taskProgressScreen/task_progress_screen.dart';
 import 'package:task_manager_getx/views/widgets/fallback_widget.dart';
-import 'package:get/get.dart';
+
 import '../newTaskAddScreen/new_task_add_screen.dart';
 import '../widgets/app_bar.dart';
 
@@ -47,35 +47,36 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getApplicationAppBar(context: context, disableNavigation: false),
-      body: GetBuilder<ConnectivityChecker>(builder: (viewModel){
-        if (viewModel.isDeviceConnected) {
-          return PageView.builder(
-            onPageChanged: (int value) {
-              Get.find<DashboardViewModel>().setIndex = value;
-              Get.find<TaskViewModel>().removeBadgeCount(
-                  value, Get.find<DashboardViewModel>());
-            },
-            controller: pageController,
-            itemCount: screens.length,
-            itemBuilder: (context, index) {
-              return screens[index];
-            },
-          );
-        }
-        return const Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  FallbackWidget(
-                      noDataMessage: AppStrings.noInternetText,
-                      asset: AppAssets.noInternet),
-                ],
+      body: GetBuilder<ConnectivityChecker>(
+        builder: (viewModel) {
+          if (viewModel.isDeviceConnected) {
+            return PageView.builder(
+              onPageChanged: (int value) {
+                Get.find<DashboardViewModel>().setIndex = value;
+                Get.find<TaskViewModel>()
+                    .removeBadgeCount(value, Get.find<DashboardViewModel>());
+              },
+              controller: pageController,
+              itemCount: screens.length,
+              itemBuilder: (context, index) {
+                return screens[index];
+              },
+            );
+          }
+          return const Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    FallbackWidget(
+                        noDataMessage: AppStrings.noInternetText,
+                        asset: AppAssets.noInternet),
+                  ],
+                ),
               ),
-            ),
-          ],
-        );
-      },
+            ],
+          );
+        },
       ),
       bottomNavigationBar: GetBuilder<DashboardViewModel>(
         builder: (viewModel) {

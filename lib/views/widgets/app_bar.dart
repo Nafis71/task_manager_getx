@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -79,10 +80,10 @@ AppBar getApplicationAppBar(
           saveThemeData("dark");
         },
         splashColor: Colors.transparent,
-        icon: Icon((Get.find<ThemeChanger>().getThemeMode(context) ==
-                ThemeMode.dark)
-            ? Icons.light_mode_outlined
-            : Icons.dark_mode_outlined),
+        icon: Icon(
+            (Get.find<ThemeChanger>().getThemeMode(context) == ThemeMode.dark)
+                ? Icons.light_mode_outlined
+                : Icons.dark_mode_outlined),
       ),
       IconButton(
         onPressed: () async {

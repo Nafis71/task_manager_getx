@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:task_manager_getx/utils/app_color.dart';
 import 'package:task_manager_getx/utils/app_strings.dart';
 import 'package:task_manager_getx/viewModels/auth_view_model.dart';
@@ -10,7 +12,7 @@ import 'package:task_manager_getx/views/authScreens/forgetPasswordScreen/pinVeri
 import 'package:task_manager_getx/views/authScreens/forgetPasswordScreen/pinVerificationScreen/resend_pin_layout.dart';
 import 'package:task_manager_getx/views/widgets/app_snackbar.dart';
 import 'package:task_manager_getx/views/widgets/forget_password_layout.dart';
-import 'package:get/get.dart';
+
 import '../../../../utils/app_routes.dart';
 
 class PinVerificationScreen extends StatefulWidget {

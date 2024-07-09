@@ -114,8 +114,8 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
   }
 
   Future<void> initiatePasswordReset() async {
-    bool status =
-        await Get.find<AuthViewModel>().resetPassword(_passwordTEController.text.trim());
+    bool status = await Get.find<AuthViewModel>()
+        .resetPassword(_passwordTEController.text.trim());
     if (status && mounted) {
       AppSnackBar().showSnackBar(
           title: AppStrings.resetPasswordSuccessTitle,

@@ -10,7 +10,7 @@ import '../utils/app_strings.dart';
 
 class TaskManager extends StatelessWidget {
   static final GlobalKey<NavigatorState> navigatorKey =
-  GlobalKey<NavigatorState>();
+      GlobalKey<NavigatorState>();
   final String userTheme;
 
   const TaskManager({super.key, required this.userTheme});
@@ -18,37 +18,35 @@ class TaskManager extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     loadUserTheme(userTheme, context);
-    return GetBuilder<ThemeChanger>(
-      builder: (viewModel) {
-        print("Current Theme : ${viewModel.themeMode}");
-        return GetMaterialApp(
-          navigatorKey: navigatorKey,
-          initialBinding: AppBinding(),
-          debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.splashScreen,
-          locale: DevicePreview.locale(context),
-          builder: DevicePreview.appBuilder,
-          onGenerateRoute: (routeSettings) {
-            return AppRoutes.generateRoute(routeSettings);
-          },
-          themeMode: viewModel.themeMode,
-          theme: AppTheme.getLightTheme(),
-          darkTheme: AppTheme.getDarkTheme(),
-        );
-      }
-    );
+    return GetBuilder<ThemeChanger>(builder: (viewModel) {
+      print("Current Theme : ${viewModel.themeMode}");
+      return GetMaterialApp(
+        navigatorKey: navigatorKey,
+        initialBinding: AppBinding(),
+        debugShowCheckedModeBanner: false,
+        initialRoute: AppRoutes.splashScreen,
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        onGenerateRoute: (routeSettings) {
+          return AppRoutes.generateRoute(routeSettings);
+        },
+        themeMode: viewModel.themeMode,
+        theme: AppTheme.getLightTheme(),
+        darkTheme: AppTheme.getDarkTheme(),
+      );
+    });
   }
 
-void loadUserTheme(String theme, BuildContext context) {
-  switch (theme) {
-    case AppStrings.darkMode:
-      Get.find<ThemeChanger>().setThemeModeSilent = ThemeMode.dark;
+  void loadUserTheme(String theme, BuildContext context) {
+    switch (theme) {
+      case AppStrings.darkMode:
+        Get.find<ThemeChanger>().setThemeModeSilent = ThemeMode.dark;
 
-    case AppStrings.lightMode:
-      Get.find<ThemeChanger>().setThemeModeSilent = ThemeMode.light;
+      case AppStrings.lightMode:
+        Get.find<ThemeChanger>().setThemeModeSilent = ThemeMode.light;
 
-    case AppStrings.systemMode:
-      Get.find<ThemeChanger>().setThemeModeSilent = ThemeMode.system;
+      case AppStrings.systemMode:
+        Get.find<ThemeChanger>().setThemeModeSilent = ThemeMode.system;
+    }
   }
-}
 }

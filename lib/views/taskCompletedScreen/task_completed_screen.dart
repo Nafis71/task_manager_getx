@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_strings.dart';
@@ -22,6 +23,7 @@ class _TaskCompletedScreenState extends State<TaskCompletedScreen> {
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -69,6 +71,7 @@ class _TaskCompletedScreenState extends State<TaskCompletedScreen> {
     await Get.find<TaskViewModel>()
         .fetchTaskList(Get.find<UserViewModel>().token);
   }
+
   @override
   void dispose() {
     super.dispose();

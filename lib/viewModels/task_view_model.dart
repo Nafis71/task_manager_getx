@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:task_manager_getx/models/responseModel/success.dart';
 import 'package:task_manager_getx/models/taskListModel/task_data.dart';
 import 'package:task_manager_getx/models/taskListModel/task_list_model.dart';
@@ -5,7 +6,7 @@ import 'package:task_manager_getx/models/taskStatusCountModels/task_status_count
 import 'package:task_manager_getx/services/task_service.dart';
 import 'package:task_manager_getx/utils/app_strings.dart';
 import 'package:task_manager_getx/viewModels/dashboard_view_model.dart';
-import 'package:get/get.dart';
+
 import '../models/taskStatusCountModels/status_data.dart';
 
 class TaskViewModel extends GetxController {

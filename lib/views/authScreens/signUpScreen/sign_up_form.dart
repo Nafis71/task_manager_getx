@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:task_manager_getx/views/widgets/circular_progressbar.dart';
+
 import '../../../utils/app_color.dart';
 import '../../../utils/app_strings.dart';
 import '../../../viewModels/auth_view_model.dart';
@@ -22,20 +23,21 @@ class SignUpForm extends StatelessWidget {
   final Function registerUser;
   final double screenWidth;
 
-  const SignUpForm({super.key,
-    required this.emailTEController,
-    required this.passwordTEController,
-    required this.formKey,
-    required this.emailFocusNode,
-    required this.passwordFocusNode,
-    required this.screenWidth,
-    required this.firstNameTEController,
-    required this.lastNameTEController,
-    required this.mobileNumberTEController,
-    required this.firstNameFocusNode,
-    required this.lastNameFocusNode,
-    required this.mobileNumberFocusNode,
-    required this.registerUser});
+  const SignUpForm(
+      {super.key,
+      required this.emailTEController,
+      required this.passwordTEController,
+      required this.formKey,
+      required this.emailFocusNode,
+      required this.passwordFocusNode,
+      required this.screenWidth,
+      required this.firstNameTEController,
+      required this.lastNameTEController,
+      required this.mobileNumberTEController,
+      required this.firstNameFocusNode,
+      required this.lastNameFocusNode,
+      required this.mobileNumberFocusNode,
+      required this.registerUser});
 
   @override
   Widget build(BuildContext context) {
@@ -92,36 +94,38 @@ class SignUpForm extends StatelessWidget {
             errorText: AppStrings.mobileNumberErrorText,
           ),
           const Gap(15),
-          GetBuilder<AuthViewModel>(builder: (viewModel) =>
-              AppTextField(
-                inputType: TextInputType.visiblePassword,
-                focusNode: passwordFocusNode,
-                controller: passwordTEController,
-                hintText: AppStrings.passwordTextFieldHint,
-                suffixIcon: getPasswordFieldIcon(viewModel),
-                isObscureText: viewModel.isPasswordObscure,
-                errorText: AppStrings.passwordErrorText,
-              ),),
+          GetBuilder<AuthViewModel>(
+            builder: (viewModel) => AppTextField(
+              inputType: TextInputType.visiblePassword,
+              focusNode: passwordFocusNode,
+              controller: passwordTEController,
+              hintText: AppStrings.passwordTextFieldHint,
+              suffixIcon: getPasswordFieldIcon(viewModel),
+              isObscureText: viewModel.isPasswordObscure,
+              errorText: AppStrings.passwordErrorText,
+            ),
+          ),
           const Gap(20),
           SizedBox(
             width: screenWidth * 0.9,
-            child: GetBuilder<AuthViewModel>(builder: (viewModel) =>
-                ElevatedButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate() &&
-                        !viewModel.isLoading) {
-                      registerUser();
-                    }
-                    FocusScope.of(context).unfocus();
-                  },
-                  child: viewModel.isLoading
-                      ? const CircularProgressbar(
-                      color: AppColor.circularProgressbarColor)
-                      : const Icon(
-                    Icons.arrow_circle_right_outlined,
-                    size: 30,
-                  ),
-                ),),
+            child: GetBuilder<AuthViewModel>(
+              builder: (viewModel) => ElevatedButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate() &&
+                      !viewModel.isLoading) {
+                    registerUser();
+                  }
+                  FocusScope.of(context).unfocus();
+                },
+                child: viewModel.isLoading
+                    ? const CircularProgressbar(
+                        color: AppColor.circularProgressbarColor)
+                    : const Icon(
+                        Icons.arrow_circle_right_outlined,
+                        size: 30,
+                      ),
+              ),
+            ),
           ),
         ],
       ),

@@ -7,6 +7,7 @@ class ConnectivityChecker extends GetxController {
   bool _isDeviceConnected = true;
   late StreamSubscription<InternetConnectionStatus> subscription;
   bool _isDisposed = false;
+
   bool get isDeviceConnected => _isDeviceConnected;
 
   Future<void> initConnectivityChecker() async {
