@@ -114,7 +114,7 @@ class AppStrings {
   static const String addTaskScreenTitle = "Add New Task";
   static const String subjectTextFieldHint = "Subject";
   static const String descriptionTextFieldHint = "Description";
-  static const String updateProfileScreenTitle = "Update Profile";
+  static const String updateProfileScreenTitle = "Profile Updated";
   static const String photoPickerText = "Photos";
   static const String updateUserProfileSuccessTitle = "Success!";
   static const String updateUserProfileFailureTitle = "Failed!";
