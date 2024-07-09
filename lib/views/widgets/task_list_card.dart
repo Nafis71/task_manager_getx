@@ -2,13 +2,12 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:provider/provider.dart';
 import 'package:task_manager_getx/utils/app_strings.dart';
 import 'package:task_manager_getx/viewModels/dashboard_view_model.dart';
 import 'package:task_manager_getx/viewModels/task_view_model.dart';
 import 'package:task_manager_getx/viewModels/user_view_model.dart';
 import 'package:task_manager_getx/views/widgets/app_snackbar.dart';
-
+import 'package:get/get.dart';
 import '../../models/taskListModel/task_data.dart';
 import '../../utils/app_color.dart';
 
@@ -30,6 +29,11 @@ class TaskListCard extends StatefulWidget {
 }
 
 class _TaskListCardState extends State<TaskListCard> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -60,7 +64,7 @@ class _TaskListCardState extends State<TaskListCard> {
                             ),
                           ),
                           onExpansionChanged: (value) {
-                            context.read<TaskViewModel>().setIsTileExpanded(
+                            Get.find<TaskViewModel>().setIsTileExpanded(
                                 widget.taskData[index].status.toString(),
                                 index,
                                 value);
@@ -208,7 +212,7 @@ class _TaskListCardState extends State<TaskListCard> {
                           ),
                         ],
                       ),
-                      Consumer<TaskViewModel>(builder: (_, viewModel, __) {
+                      GetBuilder<TaskViewModel>(builder: (viewModel) {
                         if (context.mounted &&
                             viewModel.selectedIndex
                                 .containsKey(widget.taskData[index].status)) {
@@ -238,13 +242,13 @@ class _TaskListCardState extends State<TaskListCard> {
 
   Future<void> updateItem(BuildContext context, int index, String value) async {
     if (value != widget.currentScreen) {
-      bool status = await context.read<TaskViewModel>().updateTask(
-          token: context.read<UserViewModel>().token,
+      bool status = await Get.find<TaskViewModel>().updateTask(
+          token: Get.find<UserViewModel>().token,
           taskId: widget.taskData[index].sId.toString(),
           taskStatus: value,
           currentScreenStatus: widget.currentScreen,
           index: index,
-          dashboardViewModel: context.read<DashboardViewModel>());
+          dashboardViewModel: Get.find<DashboardViewModel>());
       if (status && context.mounted) {
         AppSnackBar().showSnackBar(
             title: AppStrings.taskStatusUpdateSuccessTitle,
@@ -266,12 +270,12 @@ class _TaskListCardState extends State<TaskListCard> {
   }
 
   Future<void> itemDeletion(BuildContext context, int index) async {
-    bool status = await context.read<TaskViewModel>().deleteTask(
-          context.read<UserViewModel>().token,
-          widget.taskData[index].sId.toString(),
-          widget.taskData[index].status.toString(),
-          index,
-        );
+    bool status = await Get.find<TaskViewModel>().deleteTask(
+      Get.find<UserViewModel>().token,
+      widget.taskData[index].sId.toString(),
+      widget.taskData[index].status.toString(),
+      index,
+    );
     if (status && context.mounted) {
       AppSnackBar().showSnackBar(
           title: AppStrings.taskItemDeleteSuccessTitle,

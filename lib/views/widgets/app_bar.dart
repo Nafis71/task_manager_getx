@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager_getx/themes/theme_changer.dart';
 import 'package:task_manager_getx/utils/app_routes.dart';
@@ -17,8 +16,8 @@ AppBar getApplicationAppBar(
     SharedPreferences? preference}) {
   return AppBar(
     automaticallyImplyLeading: false,
-    title: Consumer<UserViewModel>(
-      builder: (_, viewModel, __) {
+    title: GetBuilder<UserViewModel>(
+      builder: (viewModel) {
         return Row(
           children: [
             InkWell(
@@ -26,8 +25,8 @@ AppBar getApplicationAppBar(
                 if (!disableNavigation) {
                   Navigator.pushNamed(context, AppRoutes.updateProfileScreen)
                       .then((value) {
-                    context.read<UserViewModel>().base64Image = "";
-                    context.read<UserViewModel>().imageName = "";
+                    viewModel.base64Image = "";
+                    viewModel.imageName = "";
                   });
                 }
               },
@@ -64,31 +63,30 @@ AppBar getApplicationAppBar(
     actions: [
       IconButton(
         onPressed: () {
-          if (context.read<ThemeChanger>().getThemeMode(context) ==
+          if (Get.find<ThemeChanger>().getThemeMode(context) ==
               ThemeMode.dark) {
-            context.read<ThemeChanger>().setThemeMode = ThemeMode.light;
-            saveThemeData("light");
-            print("changed");
-            return;
-          }
-          if (context.read<ThemeChanger>().getThemeMode(context) ==
-              ThemeMode.dark) {
-            context.read<ThemeChanger>().setThemeMode = ThemeMode.light;
+            Get.find<ThemeChanger>().setThemeMode = ThemeMode.light;
             saveThemeData("light");
             return;
           }
-          context.read<ThemeChanger>().setThemeMode = ThemeMode.dark;
+          if (Get.find<ThemeChanger>().getThemeMode(context) ==
+              ThemeMode.dark) {
+            Get.find<ThemeChanger>().setThemeMode = ThemeMode.light;
+            saveThemeData("light");
+            return;
+          }
+          Get.find<ThemeChanger>().setThemeMode = ThemeMode.dark;
           saveThemeData("dark");
         },
         splashColor: Colors.transparent,
-        icon: Icon((context.read<ThemeChanger>().getThemeMode(context) ==
+        icon: Icon((Get.find<ThemeChanger>().getThemeMode(context) ==
                 ThemeMode.dark)
             ? Icons.light_mode_outlined
             : Icons.dark_mode_outlined),
       ),
       IconButton(
         onPressed: () async {
-          await context.read<AuthViewModel>().signOut();
+          await Get.find<AuthViewModel>().signOut();
         },
         icon: const Icon(Icons.logout),
       ),

@@ -19,12 +19,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  late final AuthViewModel _authViewModel;
-  late final UserViewModel _userViewModel;
   @override
   void initState() {
-    _authViewModel = Get.put(AuthViewModel());
-    _userViewModel = Get.put(UserViewModel());
     super.initState();
     checkToken();
   }
@@ -35,9 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
       String? token = preferences.getString("token");
       if (mounted) {
         bool status =
-            await _authViewModel.authenticateToken(token);
+            await Get.find<AuthViewModel>().authenticateToken(token);
         if (status && mounted) {
-          await _userViewModel.loadUserData(preferences);
+          await Get.find<UserViewModel>().loadUserData(preferences);
           Future.delayed(const Duration(seconds: 2), () {
             Navigator.pushReplacementNamed(context, AppRoutes.dashboardScreen);
           });

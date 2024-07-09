@@ -23,7 +23,6 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
   late final FocusNode _passwordFocusNode;
   late final FocusNode _confirmPasswordFocusNode;
   late final GlobalKey<FormState> _formKey;
-  late final AuthViewModel _authViewModel;
 
   @override
   void initState() {
@@ -32,7 +31,6 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     _passwordTEController = TextEditingController();
     _confirmPasswordTEController = TextEditingController();
     _formKey = GlobalKey<FormState>();
-    _authViewModel = Get.put(AuthViewModel());
     super.initState();
   }
 
@@ -117,7 +115,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
 
   Future<void> initiatePasswordReset() async {
     bool status =
-        await _authViewModel.resetPassword(_passwordTEController.text.trim());
+        await Get.find<AuthViewModel>().resetPassword(_passwordTEController.text.trim());
     if (status && mounted) {
       AppSnackBar().showSnackBar(
           title: AppStrings.resetPasswordSuccessTitle,
@@ -129,7 +127,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
       return;
     }
     if (mounted) {
-      Failure failure = _authViewModel.response as Failure;
+      Failure failure = Get.find<AuthViewModel>().response as Failure;
       AppSnackBar().showSnackBar(
           title: AppStrings.resetPasswordFailureTitle,
           content: failure.message,
@@ -145,7 +143,6 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     _confirmPasswordTEController.dispose();
     _confirmPasswordFocusNode.dispose();
     _passwordFocusNode.dispose();
-    _authViewModel.dispose();
     super.dispose();
   }
 }

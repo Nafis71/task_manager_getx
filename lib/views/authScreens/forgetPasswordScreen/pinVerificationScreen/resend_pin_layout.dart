@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager_getx/utils/app_color.dart';
 import 'package:task_manager_getx/viewModels/auth_view_model.dart';
 
@@ -6,13 +7,12 @@ class ResendPinLayout extends StatelessWidget {
   final int resendTimeLeft;
   final String email;
   final Function restartTimer;
-  final AuthViewModel authViewModel;
 
   const ResendPinLayout(
       {super.key,
       required this.resendTimeLeft,
       required this.email,
-      required this.restartTimer, required this.authViewModel});
+      required this.restartTimer,});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ResendPinLayout extends StatelessWidget {
             if (resendTimeLeft != 0) {
               return;
             }
-            await authViewModel.sendOTP(email, isResending: true);
+            await Get.find<AuthViewModel>().sendOTP(email, isResending: true);
             restartTimer();
           },
           child: Text(

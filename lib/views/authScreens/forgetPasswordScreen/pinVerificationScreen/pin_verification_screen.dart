@@ -22,8 +22,6 @@ class PinVerificationScreen extends StatefulWidget {
 
 class _PinVerificationScreenState extends State<PinVerificationScreen> {
   late final List<TextEditingController> pinTEControllers;
-  late final CountdownTimerViewModel _countdownTimerViewModel;
-  late final AuthViewModel _authViewModel;
   late final List<FocusNode> focusNodes;
   late GlobalKey<FormState> _formKey;
   final double textFieldHeight = 50;
@@ -34,20 +32,18 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
     pinTEControllers = List.generate(6, (index) => TextEditingController());
     focusNodes = List.generate(6, (index) => FocusNode());
     _formKey = GlobalKey<FormState>();
-    _countdownTimerViewModel = Get.put(CountdownTimerViewModel());
-    _authViewModel = Get.put(AuthViewModel());
     super.initState();
     startCountDownTimer();
   }
 
   void startCountDownTimer() async {
-    _countdownTimerViewModel.resetCountDown();
+    Get.find<CountdownTimerViewModel>().resetCountDown();
     timer = Timer.periodic(const Duration(seconds: 1), (countdown) {
       if (countdown.tick > 60) {
         countdown.cancel();
         return;
       }
-      _countdownTimerViewModel.updateCountdown();
+      Get.find<CountdownTimerViewModel>().updateCountdown();
     });
   }
 
@@ -97,9 +93,8 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                   builder: (viewModel) => Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ResendPinLayout(
-                      authViewModel: _authViewModel,
                       resendTimeLeft: viewModel.resendTimeLeft,
-                      email: _authViewModel.recoveryEmail,
+                      email: Get.find<AuthViewModel>().recoveryEmail,
                       restartTimer: startCountDownTimer,
                     ),
                   ),
@@ -117,7 +112,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
     for (TextEditingController controller in pinTEControllers) {
       otp = otp + controller.text.trim();
     }
-    bool status = await _authViewModel.verifyOTP(otp);
+    bool status = await Get.find<AuthViewModel>().verifyOTP(otp);
     if (status && mounted) {
       timer.cancel();
       Navigator.pushReplacementNamed(context, AppRoutes.setPasswordScreen);
@@ -141,8 +136,6 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
     for (FocusNode focusNode in focusNodes) {
       focusNode.dispose();
     }
-    _authViewModel.dispose();
-    _countdownTimerViewModel.dispose();
     super.dispose();
   }
 }

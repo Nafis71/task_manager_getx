@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
-
 import '../../utils/app_color.dart';
 import '../../utils/app_strings.dart';
 import '../../viewModels/user_view_model.dart';
 import '../widgets/app_textfield.dart';
 import '../widgets/circular_progressbar.dart';
+import 'package:get/get.dart';
 
 class UpdateProfileScreenForm extends StatelessWidget {
   final TextEditingController emailTEController,
@@ -94,8 +93,8 @@ class UpdateProfileScreenForm extends StatelessWidget {
             labelText: AppStrings.mobileNumberTextFieldHint,
           ),
           const Gap(20),
-          Consumer<UserViewModel>(
-            builder: (_, viewModel, __) => AppTextField(
+          GetBuilder<UserViewModel>(
+            builder: (viewModel) => AppTextField(
               focusNode: passwordFocusNode,
               controller: passwordTEController,
               isObscureText: viewModel.isPasswordObscured,
@@ -123,8 +122,8 @@ class UpdateProfileScreenForm extends StatelessWidget {
           const Gap(20),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
-            child: Consumer<UserViewModel>(
-              builder: (_, viewModel, __) {
+            child: GetBuilder<UserViewModel>(
+              builder: (viewModel) {
                 return ElevatedButton(
                   onPressed: () => onPressed(viewModel),
                   child: viewModel.isLoading

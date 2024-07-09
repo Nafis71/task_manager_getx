@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
-
+import 'package:get/get.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_strings.dart';
@@ -20,6 +19,11 @@ class TaskCancelledScreen extends StatefulWidget {
 
 class _TaskCancelledScreenState extends State<TaskCancelledScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -34,7 +38,7 @@ class _TaskCancelledScreenState extends State<TaskCancelledScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Gap(5),
-              Consumer<TaskViewModel>(builder: (_, viewModel, __) {
+              GetBuilder<TaskViewModel>(builder: (viewModel) {
                 if (viewModel.taskDataByStatus[AppStrings.taskStatusCanceled] ==
                     null) {
                   return const LoadingLayout();
@@ -62,8 +66,12 @@ class _TaskCancelledScreenState extends State<TaskCancelledScreen> {
   }
 
   Future<void> fetchListData() async {
-    await context
-        .read<TaskViewModel>()
-        .fetchTaskList(context.read<UserViewModel>().token);
+    await Get.find<TaskViewModel>()
+        .fetchTaskList(Get.find<UserViewModel>().token);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

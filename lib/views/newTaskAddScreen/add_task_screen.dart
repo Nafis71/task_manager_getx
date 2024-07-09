@@ -1,7 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:task_manager_getx/utils/app_strings.dart';
 import 'package:task_manager_getx/viewModels/task_view_model.dart';
 import 'package:task_manager_getx/viewModels/user_view_model.dart';
@@ -84,14 +84,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         const Gap(25),
                         SizedBox(
                           width: screenWidth * 0.9,
-                          child: Consumer<TaskViewModel>(
-                            builder: (_, viewModel, __) {
+                          child: GetBuilder<TaskViewModel>(
+                            builder: (viewModel) {
                               return ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate() &&
-                                      !context
-                                          .read<TaskViewModel>()
-                                          .isLoading) {
+                                      !viewModel.isLoading) {
                                     addTask();
                                   }
                                 },
@@ -120,8 +118,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   }
 
   void addTask() async {
-    bool status = await context.read<TaskViewModel>().createTask(
-        context.read<UserViewModel>().token,
+    bool status = await Get.find<TaskViewModel>().createTask(
+        Get.find<UserViewModel>().token,
         subjectTEController.text,
         descriptionTEController.text);
     if (status && mounted) {

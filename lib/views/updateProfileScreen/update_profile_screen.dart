@@ -1,7 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager_getx/models/loginModels/user_data.dart';
 import 'package:task_manager_getx/models/responseModel/failure.dart';
@@ -57,7 +57,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   }
 
   void getUserData() {
-    UserData userData = context.read<UserViewModel>().userData;
+    UserData userData = Get.find<UserViewModel>().userData;
     _emailTEController.text = userData.email.toString();
     _firstNameTEController.text = userData.firstName.toString();
     _lastNameTEController.text = userData.lastName.toString();
@@ -88,7 +88,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     InkWell(
                       splashColor: Colors.transparent,
                       onTap: () {
-                        context.read<UserViewModel>().getImageFromGallery();
+                        Get.find<UserViewModel>().getImageFromGallery();
                       },
                       child: Container(
                         height: 45,
@@ -116,8 +116,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             const Gap(20),
                             SizedBox(
                               width: screenWidth * 0.55,
-                              child: Consumer<UserViewModel>(
-                                builder: (_, viewModel, __) {
+                              child: GetBuilder<UserViewModel>(
+                                builder: (viewModel) {
                                   if (viewModel.imageName.isEmpty) {
                                     return const Text(
                                       overflow: TextOverflow.ellipsis,

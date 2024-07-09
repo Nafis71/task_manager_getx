@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-class ConnectivityChecker extends ChangeNotifier {
+class ConnectivityChecker extends GetxController {
   bool _isDeviceConnected = true;
   late StreamSubscription<InternetConnectionStatus> subscription;
   bool _isDisposed = false;
@@ -15,11 +15,11 @@ class ConnectivityChecker extends ChangeNotifier {
         switch (status) {
           case InternetConnectionStatus.connected:
             _isDeviceConnected = true;
-            notifyListeners();
+            update();
             break;
           case InternetConnectionStatus.disconnected:
             _isDeviceConnected = false;
-            notifyListeners();
+            update();
             break;
         }
       },

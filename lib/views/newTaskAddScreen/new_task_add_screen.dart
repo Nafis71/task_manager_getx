@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:task_manager_getx/services/connectivity_checker.dart';
 import 'package:task_manager_getx/utils/app_color.dart';
 import 'package:task_manager_getx/utils/app_routes.dart';
@@ -22,7 +22,6 @@ class NewTaskAddScreen extends StatefulWidget {
 }
 
 class _NewTaskAddScreenState extends State<NewTaskAddScreen> {
-  AppLifecycleState appLifecycleState = AppLifecycleState.detached;
 
   @override
   void initState() {
@@ -47,17 +46,16 @@ class _NewTaskAddScreenState extends State<NewTaskAddScreen> {
             children: [
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Consumer<ConnectivityChecker>(
-                  builder: (_, connectivityViewModel, __) {
+                child: GetBuilder<ConnectivityChecker>(
+                  builder: (connectivityViewModel) {
                     if (connectivityViewModel.isDeviceConnected) {
-                      if (context
-                              .read<TaskViewModel>()
+                      if (Get.find<TaskViewModel>()
                               .taskDataByStatus[AppStrings.taskStatusNew] ==
                           null) {
                         fetchTasksData();
                       }
-                      return Consumer<TaskViewModel>(
-                        builder: (_, viewModel, __) {
+                      return GetBuilder<TaskViewModel>(
+                        builder: (viewModel) {
                           if (viewModel.taskStatusCount.isEmpty) {
                             return const SizedBox.shrink();
                           }
@@ -117,7 +115,7 @@ class _NewTaskAddScreenState extends State<NewTaskAddScreen> {
                 ),
               ),
               const Gap(5),
-              Consumer<TaskViewModel>(builder: (_, viewModel, __) {
+              GetBuilder<TaskViewModel>(builder: (viewModel) {
                 if (viewModel.taskDataByStatus[AppStrings.taskStatusNew] ==
                     null) {
                   return const LoadingLayout();
@@ -153,14 +151,16 @@ class _NewTaskAddScreenState extends State<NewTaskAddScreen> {
 
   Future<void> fetchTasksData() async {
     if (mounted) {
-      await context
-          .read<TaskViewModel>()
-          .fetchTaskStatusData(context.read<UserViewModel>().token);
+      await Get.find<TaskViewModel>()
+          .fetchTaskStatusData(Get.find<UserViewModel>().token);
     }
     if (mounted) {
-      await context
-          .read<TaskViewModel>()
-          .fetchTaskList(context.read<UserViewModel>().token);
+      await Get.find<TaskViewModel>()
+          .fetchTaskList(Get.find<UserViewModel>().token);
     }
+  }
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

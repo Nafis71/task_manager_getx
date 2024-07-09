@@ -28,18 +28,12 @@ class _SignInScreenState extends State<SignInScreen> {
   late final GlobalKey<FormState> _formKey;
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
-  late final AuthViewModel _authViewModel;
-  late final UserViewModel _userViewModel;
-  late final TaskViewModel _taskViewModel;
 
   @override
   void initState() {
     _emailTEController = TextEditingController();
     _passwordTEController = TextEditingController();
     _formKey = GlobalKey<FormState>();
-    _authViewModel = Get.put(AuthViewModel());
-    _userViewModel = Get.put(UserViewModel());
-    _taskViewModel = Get.put(TaskViewModel());
     super.initState();
   }
 
@@ -122,18 +116,18 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Future<void> initiateSignIn() async {
-    bool status = await _authViewModel.signInUser(
+    bool status = await Get.find<AuthViewModel>().signInUser(
         email: _emailTEController.text.trim(),
         password: _passwordTEController.text,
-        userViewModel: _userViewModel);
+        userViewModel: Get.find<UserViewModel>());
     if (mounted && status) {
-      _taskViewModel.resetTaskData();
+      Get.find<TaskViewModel>().resetTaskData();
       Navigator.pushReplacementNamed(context, AppRoutes.dashboardScreen);
-      _authViewModel.setPasswordObscure = true;
+      Get.find<AuthViewModel>().setPasswordObscure = true;
       return;
     }
     if (mounted) {
-      Failure failure = _authViewModel.response as Failure;
+      Failure failure = Get.find<AuthViewModel>().response as Failure;
       AppSnackBar().showSnackBar(
           title: AppStrings.signInFailureTitle,
           content: failure.message,
@@ -149,9 +143,6 @@ class _SignInScreenState extends State<SignInScreen> {
     _passwordTEController.dispose();
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
-    _authViewModel.dispose();
-    _taskViewModel.dispose();
-    _userViewModel.dispose();
     super.dispose();
   }
 }

@@ -1,7 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-
+import 'package:get/get.dart';
 import 'package:task_manager_getx/utils/app_strings.dart';
 import 'package:task_manager_getx/views/authScreens/signUpScreen/sign_up_form.dart';
 import 'package:task_manager_getx/views/widgets/app_snackbar.dart';
@@ -97,9 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> registerUser() async {
-    final AuthViewModel authViewModel =
-        Provider.of<AuthViewModel>(context, listen: false);
-    bool status = await authViewModel.registerUser(
+    bool status = await Get.find<AuthViewModel>().registerUser(
         email: _emailTEController.text.trim(),
         firstName: _firstNameTEController.text.trim(),
         lastName: _lastNameTEController.text.trim(),
@@ -125,7 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void gotoSignIn() {
-    context.read<AuthViewModel>().setPasswordObscure = true;
+    Get.find<AuthViewModel>().setPasswordObscure = true;
     Navigator.pop(context);
   }
 
