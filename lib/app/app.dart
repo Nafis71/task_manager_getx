@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:task_manager_getx/themes/app_theme.dart';
@@ -19,14 +18,11 @@ class TaskManager extends StatelessWidget {
   Widget build(BuildContext context) {
     loadUserTheme(userTheme, context);
     return GetBuilder<ThemeChanger>(builder: (viewModel) {
-      print("Current Theme : ${viewModel.themeMode}");
       return GetMaterialApp(
         navigatorKey: navigatorKey,
         initialBinding: AppBinding(),
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.splashScreen,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
         onGenerateRoute: (routeSettings) {
           return AppRoutes.generateRoute(routeSettings);
         },

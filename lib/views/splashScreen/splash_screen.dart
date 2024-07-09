@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_manager_getx/services/connectivity_checker.dart';
 import 'package:task_manager_getx/utils/app_assets.dart';
 import 'package:task_manager_getx/utils/app_routes.dart';
 import 'package:task_manager_getx/viewModels/auth_view_model.dart';
@@ -23,6 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    Get.find<ConnectivityChecker>().initConnectivityChecker();
     checkToken();
   }
 

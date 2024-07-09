@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,10 +11,8 @@ main() async {
   theme ??= "system";
   Get.put(ThemeChanger());
   runApp(
-    DevicePreview(
-      builder: (_) => TaskManager(
-        userTheme: theme!,
-      ),
+    TaskManager(
+      userTheme: theme!,
     ),
   );
 }

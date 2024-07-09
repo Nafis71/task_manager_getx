@@ -215,7 +215,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         mobile: _mobileNumberTEController.text.trim(),
         password: _passwordTEController.text);
     if (status && mounted) {
-      AppSnackBar().showSnackBar(title: AppStrings.updateProfileScreenTitle,
+      AppSnackBar().showSnackBar(title: AppStrings.updateUserProfileSuccessTitle,
           content: AppStrings.updateUserProfileSuccessMessage,
           contentType: ContentType.success,
           color: AppColor.snackBarSuccessColor,
