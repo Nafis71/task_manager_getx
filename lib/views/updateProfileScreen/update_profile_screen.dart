@@ -60,9 +60,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   }
 
   void getUserData() {
-    UserData userData = Get
-        .find<UserViewModel>()
-        .userData;
+    UserData userData = Get.find<UserViewModel>().userData;
     _emailTEController.text = userData.email.toString();
     _firstNameTEController.text = userData.firstName.toString();
     _lastNameTEController.text = userData.lastName.toString();
@@ -72,10 +70,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: getApplicationAppBar(context: context, disableNavigation: true),
       body: OrientationBuilder(
@@ -84,7 +79,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             childWidget: SingleChildScrollView(
               child: Container(
                 margin:
-                const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -103,12 +98,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         return CircleAvatar(
                           radius: 90,
                           backgroundImage: (viewModel
-                              .userData.photo!.isNotEmpty)
+                                  .userData.photo!.isNotEmpty)
                               ? MemoryImage(
-                            base64Decode(
-                              viewModel.userData.photo.toString(),
-                            ),
-                          )
+                                  base64Decode(
+                                    viewModel.userData.photo.toString(),
+                                  ),
+                                )
                               : const AssetImage(AppAssets.userDefaultImage),
                         );
                       }),
@@ -116,10 +111,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     const Gap(15),
                     Text(
                       AppStrings.updateProfileScreenTitle,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headlineLarge,
+                      style: Theme.of(context).textTheme.headlineLarge,
                     ),
                     const Gap(15),
                     InkWell(
@@ -147,10 +139,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               alignment: Alignment.center,
                               child: Text(
                                 AppStrings.photoPickerText,
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .labelMedium,
+                                style: Theme.of(context).textTheme.labelMedium,
                               ),
                             ),
                             const Gap(20),
@@ -169,7 +158,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                       overflow: TextOverflow.ellipsis,
                                       viewModel.imageName,
                                       style:
-                                      const TextStyle(color: Colors.black));
+                                          const TextStyle(color: Colors.black));
                                 },
                               ),
                             ),
@@ -215,21 +204,24 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         mobile: _mobileNumberTEController.text.trim(),
         password: _passwordTEController.text);
     if (status && mounted) {
-      AppSnackBar().showSnackBar(title: AppStrings.updateUserProfileSuccessTitle,
+      AppSnackBar().showSnackBar(
+          title: AppStrings.updateUserProfileSuccessTitle,
           content: AppStrings.updateUserProfileSuccessMessage,
           contentType: ContentType.success,
           color: AppColor.snackBarSuccessColor,
           context: context);
-      Get.off((){});
+      Get.back();
       return;
     }
     if (mounted) {
       Failure failure = viewModel.response as Failure;
-      AppSnackBar().showSnackBar(title: AppStrings.updateUserProfileFailureTitle,
-          content: failure.message,
-          contentType: ContentType.failure,
-          color: AppColor.snackBarFailureColor,
-          context: context);
+      AppSnackBar().showSnackBar(
+        title: AppStrings.updateUserProfileFailureTitle,
+        content: failure.message,
+        contentType: ContentType.failure,
+        color: AppColor.snackBarFailureColor,
+        context: context,
+      );
     }
   }
 

@@ -129,7 +129,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           contentType: ContentType.success,
           color: AppColor.snackBarSuccessColor,
           context: context);
-      Get.off((){});
+      Get.back();
       return;
     }
     if (mounted) {

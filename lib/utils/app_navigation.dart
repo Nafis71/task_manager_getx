@@ -19,7 +19,7 @@ class AppNavigation extends AuthViewModel {
 
   void gotoSignIn() {
     setPasswordObscure = true;
-    Get.off((){});
+    Get.back();
   }
 
   void gotoSignUp(FocusNode emailFocusNode, FocusNode passwordFocusNode) {
@@ -33,6 +33,6 @@ class AppNavigation extends AuthViewModel {
   Future<void> signOutUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.clear();
-    Get.offNamedUntil(AppRoutes.signInScreen, (route)=> false);
+    Get.offNamed(AppRoutes.signInScreen);
   }
 }

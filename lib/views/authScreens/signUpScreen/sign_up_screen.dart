@@ -124,7 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void gotoSignIn() {
     Get.find<AuthViewModel>().setPasswordObscure = true;
-    Get.off((){});
+    Get.back();
   }
 
   @override

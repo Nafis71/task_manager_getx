@@ -123,7 +123,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
           contentType: ContentType.success,
           color: AppColor.snackBarSuccessColor,
           context: context);
-      Get.off((){});
+      Get.back();
       return;
     }
     if (mounted) {
