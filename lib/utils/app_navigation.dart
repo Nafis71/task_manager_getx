@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../app/app.dart';
@@ -18,14 +19,12 @@ class AppNavigation extends AuthViewModel {
 
   void gotoSignIn() {
     setPasswordObscure = true;
-    Navigator.pop(TaskManager.navigatorKey.currentContext!);
+    Get.off((){});
   }
 
   void gotoSignUp(FocusNode emailFocusNode, FocusNode passwordFocusNode) {
     setPasswordObscure = true;
-    Navigator.pushNamed(
-            TaskManager.navigatorKey.currentContext!, AppRoutes.signUpScreen)
-        .then((value) {
+    Get.toNamed(AppRoutes.signUpScreen)?.then((value){
       emailFocusNode.unfocus();
       passwordFocusNode.unfocus();
     });
@@ -34,7 +33,6 @@ class AppNavigation extends AuthViewModel {
   Future<void> signOutUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.clear();
-    Navigator.pushNamedAndRemoveUntil(TaskManager.navigatorKey.currentContext!,
-        AppRoutes.signInScreen, (route) => false);
+    Get.offNamedUntil(AppRoutes.signInScreen, (route)=> false);
   }
 }

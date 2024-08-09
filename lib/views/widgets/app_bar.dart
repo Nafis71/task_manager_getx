@@ -24,8 +24,7 @@ AppBar getApplicationAppBar(
             InkWell(
               onTap: () {
                 if (!disableNavigation) {
-                  Navigator.pushNamed(context, AppRoutes.updateProfileScreen)
-                      .then((value) {
+                  Get.toNamed(AppRoutes.updateProfileScreen)?.then((value){
                     viewModel.base64Image = "";
                     viewModel.imageName = "";
                   });

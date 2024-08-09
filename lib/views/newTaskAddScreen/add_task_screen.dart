@@ -129,7 +129,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           contentType: ContentType.success,
           color: AppColor.snackBarSuccessColor,
           context: context);
-      Navigator.pop(context, true);
+      Get.off((){});
       return;
     }
     if (mounted) {

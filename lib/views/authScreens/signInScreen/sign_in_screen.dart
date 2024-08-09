@@ -123,7 +123,7 @@ class _SignInScreenState extends State<SignInScreen> {
         userViewModel: Get.find<UserViewModel>());
     if (mounted && status) {
       Get.find<TaskViewModel>().resetTaskData();
-      Navigator.pushReplacementNamed(context, AppRoutes.dashboardScreen);
+      Get.offAndToNamed(AppRoutes.dashboardScreen);
       Get.find<AuthViewModel>().setPasswordObscure = true;
       return;
     }

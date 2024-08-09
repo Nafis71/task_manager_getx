@@ -220,7 +220,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           contentType: ContentType.success,
           color: AppColor.snackBarSuccessColor,
           context: context);
-      Navigator.pop(context);
+      Get.off((){});
       return;
     }
     if (mounted) {

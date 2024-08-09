@@ -37,11 +37,11 @@ class _SplashScreenState extends State<SplashScreen> {
         if (status && mounted) {
           await Get.find<UserViewModel>().loadUserData(preferences);
           Future.delayed(const Duration(seconds: 2), () {
-            Navigator.pushReplacementNamed(context, AppRoutes.dashboardScreen);
+            Get.offAndToNamed(AppRoutes.dashboardScreen);
           });
         } else {
           Future.delayed(const Duration(seconds: 3), () {
-            Navigator.pushReplacementNamed(context, AppRoutes.signInScreen);
+            Get.offAndToNamed(AppRoutes.signInScreen);
           });
         }
       }

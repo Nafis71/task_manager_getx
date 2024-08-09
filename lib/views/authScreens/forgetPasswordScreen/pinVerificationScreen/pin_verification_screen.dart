@@ -117,7 +117,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
     bool status = await Get.find<AuthViewModel>().verifyOTP(otp);
     if (status && mounted) {
       timer.cancel();
-      Navigator.pushReplacementNamed(context, AppRoutes.setPasswordScreen);
+      Get.offAndToNamed(AppRoutes.setPasswordScreen);
       return;
     }
     if (mounted) {

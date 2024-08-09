@@ -9,11 +9,11 @@ import 'package:task_manager_getx/viewModels/user_view_model.dart';
 class AppBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(TaskViewModel());
-    Get.put(AuthViewModel());
-    Get.put(CountdownTimerViewModel());
-    Get.put(DashboardViewModel());
-    Get.put(UserViewModel());
-    Get.put(ConnectivityChecker());
+    Get.lazyPut(()=> TaskViewModel());
+    Get.lazyPut(()=>AuthViewModel());
+    Get.lazyPut(()=>CountdownTimerViewModel());
+    Get.lazyPut(()=>DashboardViewModel());
+    Get.lazyPut(()=>UserViewModel());
+    Get.lazyPut(()=>ConnectivityChecker());
   }
 }

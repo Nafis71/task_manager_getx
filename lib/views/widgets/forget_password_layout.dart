@@ -66,7 +66,7 @@ class ForgetPasswordLayout extends StatelessWidget {
               ),
               const Gap(30),
               SignInBottomText(route: () {
-                Navigator.pop(context);
+                Get.off((){});
               })
             ],
           ),

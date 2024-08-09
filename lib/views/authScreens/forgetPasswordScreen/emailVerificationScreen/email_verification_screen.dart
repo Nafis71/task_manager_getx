@@ -83,7 +83,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     bool status =
         await Get.find<AuthViewModel>().sendOTP(_emailTEController.text.trim());
     if (status && mounted) {
-      Navigator.pushReplacementNamed(context, AppRoutes.pinVerificationScreen);
+      Get.offAndToNamed(AppRoutes.pinVerificationScreen);
       return;
     }
     if (mounted) {
